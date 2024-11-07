@@ -3,63 +3,92 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Exercise 9: Digital Signal Encoding Techniques Visualizer");
-        System.out.println("Enter digital signal (e.g. 10100):");
-        String input = scan.next();
 
+        System.out.println("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓");
+        System.out.println("│ Exercise 9: Digital Signal Encoding Techniques Visualizer │");
+        System.out.println("└───────────────────────────────────────────────────────────┘");
+
+
+        String input = "";
         String RESET = "\u001B[0m";
         String RED = "\u001B[31m";
         String YELLOW = "\u001B[33m";
 
+        while(true) {
+            System.out.println();
+            System.out.println("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" );
+            System.out.println("│ Enter digital signal (e.g. 10100) │");
+            System.out.println("│ Type "+ YELLOW + "Done "+ RESET+ "to finish               │" );
+            System.out.println("└───────────────────────────────────┘" );
+            input = scan.next();
 
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓ NRZ - L ▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        printInput(input);
-        Digit[] nrzL = createLink(input);               //create Linked         (NRZL)
-        artNRZL(nrzL,input);                            //create ASCII art      (NRZL)
+            if(input.equals("Done")) {
+                System.out.println("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓");
+                System.out.println("│ Brought to you by: https://github.com/RrussellW           │");
+                System.out.println("└───────────────────────────────────────────────────────────┘");
+                return;
+            }
+
+            if (!(input.matches("[01]+"))) {
+                System.out.println("Input should " + RED + "only be" + RESET + " ones zeroes.");
+            } else {
+                System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓" + RESET);
+                System.out.println(YELLOW + "│ " + RESET + "NRZ - L" + YELLOW + " │" + RESET);
+                System.out.println(YELLOW + "└─────────┘" + RESET);
+                printInput(input);
+                Digit[] nrzL = createLink(input);               //create Linked         (NRZL)
+                artNRZL(nrzL, input);                            //create ASCII art      (NRZL)
+                printInputBottom(input);
+
+                System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓" + RESET);
+                System.out.println(YELLOW + "│ " + RESET + "NRZ - I" + YELLOW + " │" + RESET);
+                System.out.println(YELLOW + "└─────────┘" + RESET);
+                printInput(input);
+                String inputNRZI = convertNRZI(nrzL, input);    //convert new input     (NRZI)
+                Digit[] nrzI = createLink(inputNRZI);           //create new Linked     (NRZI)
+                artNRZL(nrzI, inputNRZI);                        //create ASCII art      (NRZI)
+                printInputBottom(input);
 
 
-
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓ NRZ - I ▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        printInput(input);
-        String inputNRZI = convertNRZI(nrzL, input);    //convert new input     (NRZI)
-        Digit[] nrzI = createLink(inputNRZI);           //create new Linked     (NRZI)
-        artNRZL(nrzI,inputNRZI);                        //create ASCII art      (NRZI)
-
-
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓ Bipolar - AMI ▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        printInput(input);
-        String inputAMI = convertAMI(nrzL, input);    //convert new input     (AMI)
-        Digit[] bAMI = createLink(inputAMI);           //create new Linked     (AMI)
-        artNRZL(bAMI,inputAMI);                        //create ASCII art      (AMI)
+                System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
+                System.out.println(YELLOW + "│ " + RESET + "Bipolar - AMI" + YELLOW + " │" + RESET);
+                System.out.println(YELLOW + "└───────────────┘" + RESET);
+                printInput(input);
+                String inputAMI = convertAMI(nrzL, input);    //convert new input     (AMI)
+                Digit[] bAMI = createLink(inputAMI);           //create new Linked     (AMI)
+                artNRZL(bAMI, inputAMI);                        //create ASCII art      (AMI)
+                printInputBottom(input);
 
 
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓ Pseudoternary ▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        printInput(input);
-        String inputPseudo = convertPseudo(nrzL, input);    //convert new input     (Pseudo)
-        Digit[] pTern = createLink(inputPseudo);           //create new Linked     (Pseudo)
-        artNRZL(pTern,inputPseudo);                        //create ASCII art      (Pseudo)
+                System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
+                System.out.println(YELLOW + "│ " + RESET + "Pseudoternary" + YELLOW + " │" + RESET);
+                System.out.println(YELLOW + "└───────────────┘" + RESET);
+                printInput(input);
+                String inputPseudo = convertPseudo(nrzL, input);    //convert new input     (Pseudo)
+                Digit[] pTern = createLink(inputPseudo);           //create new Linked     (Pseudo)
+                artNRZL(pTern, inputPseudo);                        //create ASCII art      (Pseudo)
+                printInputBottom(input);
 
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓ Manchester ▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        printInput(input);
-        artMC(nrzL,input);                            //create ASCII art      (Manchester)
+                System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
+                System.out.println(YELLOW + "│ " + RESET + "Manchester" + YELLOW + " │" + RESET);
+                System.out.println(YELLOW + "└────────────┘" + RESET);
+                printInput(input);
+                artMC(nrzL, input);                            //create ASCII art      (Manchester)
+                printInputBottom(input);
 
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓ Differential Manchester ▓▓" + RESET);
-        System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
-        printInput(input);
-        String diffInput = diffMC(nrzL,input);
-        Digit[] diff = createLink(diffInput);             //create Linked         (Differential)
-        artMC(diff,diffInput);                            //create ASCII art      (Differential)
+                System.out.println(YELLOW + "▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓" + RESET);
+                System.out.println(YELLOW + "│ " + RESET + "Differential Manchester" + YELLOW + " │" + RESET);
+                System.out.println(YELLOW + "└─────────────────────────┘" + RESET);
+                printInput(input);
+                String diffInput = convertDiff(nrzL, input);
+                Digit[] diff = createLink(diffInput);             //create Linked         (Differential)
+                artMC(diff, diffInput);                            //create ASCII art      (Differential)
+                printInputBottom(input);
+
+                System.out.println();
+                System.out.println("When encountering bugs, errors, crashes and freezes, goodluck");
+            }
+        }
     }
 
     public static void printInput(String input) {
@@ -68,15 +97,32 @@ public class Main {
         String YELLOW = "\u001B[33m";
 
         for(int i = 0; i < input.length(); i++) {
-            System.out.print(YELLOW +"═══════" + RESET);
+            System.out.print(YELLOW +"▓▓▓▓▓▓▓" + RESET);
         }
         System.out.println();
         for(int i = 0; i < input.length(); i++) {
-            System.out.print(YELLOW +"║  " + RED + input.charAt(i) + YELLOW + "  ║" + RESET);
+            System.out.print(YELLOW +"│   " + RED + input.charAt(i) + YELLOW + "  " + RESET);
         }
         System.out.println();
         for(int i = 0; i < input.length(); i++) {
-            System.out.print(YELLOW +"═══════" + RESET);
+            System.out.print(YELLOW +"┼──────" + RESET);
+        }
+        System.out.println();
+    }
+
+    public static void printInputBottom(String input) {
+        String RESET = "\u001B[0m";
+        String YELLOW = "\u001B[33m";
+        for(int i = 0; i < input.length(); i++) {
+            if(i==0) {
+                if(i+1 == input.length()){
+                    System.out.print(YELLOW +"└─────┘" + RESET);
+                } else {
+                    System.out.print(YELLOW +"└──────" + RESET);
+                }
+            } else {
+                System.out.print(YELLOW +"┴──────" + RESET);
+            }
         }
         System.out.println();
     }
@@ -106,7 +152,10 @@ public class Main {
 
     public static void artNRZL(Digit[] input,String n){
 
-        String top00 = "       ";
+        String RESET = "\u001B[0m";
+        String YELLOW = "\u001B[33m";
+
+        String top00 = YELLOW + "│" + RESET + "      ";
         String top01 = "╔══════";
         String top10 = "╗      ";
         String top11 = "═══════";
@@ -114,7 +163,7 @@ public class Main {
         String bot00 = "═══════";
         String bot01 = "╝      ";
         String bot10 = "╚══════";
-        String bot11 = "       ";
+        String bot11 = YELLOW + "│" + RESET + "      ";
 
         String mid20 = "╗      ";
         String bot20 = "╚══════";
@@ -124,7 +173,7 @@ public class Main {
         String mid12 = "╚══════";
 
         String bodyEC = "║      ";
-        String bodyCC = "       ";
+        String bodyCC = YELLOW + "│" + RESET + "      ";
 
         String[][] art = new String[6][n.length()];
 
@@ -133,15 +182,15 @@ public class Main {
 
             if(n.charAt(i) == '1'){
                 if(input[i].before == '1'){   //before 1 curr 1
-                    art[0][i] = top11; //end 1
+                    art[0][i] = top11;
                     art[1][i] = bodyCC;
                     art[2][i] = bot11;
                 } else if(input[i].before == '0' || input[i].before == 's'){//before 0 curr 1
-                    art[0][i] = top01; //end 1
+                    art[0][i] = top01;
                     art[1][i] = bodyEC;
                     art[2][i] = bot01;
                 } else {                    //before 2 curr 1
-                    art[0][i] = top01; //end 1
+                    art[0][i] = top01;
                     art[1][i] = bot01;
                     art[2][i] = bodyCC;
                 }
@@ -283,9 +332,12 @@ public class Main {
 
     public static void artMC(Digit[] input,String n){
 
+        String RESET = "\u001B[0m";
+        String YELLOW = "\u001B[33m";
+
         String top01 = "═══╗   ";
-        String mid01 = "   ║   ";
-        String bot01 = "   ╚═══";
+        String mid01 = YELLOW + "│" + RESET + "  ║   ";
+        String bot01 = YELLOW + "│" + RESET + "  ╚═══";
 
         String top00 = "╔══╗   ";
         String mid00 = "║  ║   ";
@@ -295,8 +347,8 @@ public class Main {
         String mid11 = "║  ║   ";
         String bot11 = "╚══╝   ";
 
-        String top10 = "   ╔═══";
-        String mid10 = "   ║   ";
+        String top10 = YELLOW + "│" + RESET + "  ╔═══";
+        String mid10 = YELLOW + "│" + RESET + "  ║   ";
         String bot10 = "═══╝   ";
 
         String[][] art = new String[6][n.length()];
@@ -337,7 +389,7 @@ public class Main {
 
     }
 
-    public static String diffMC(Digit[] input,String n) {
+    public static String convertDiff(Digit[] input,String n) {
         String conversion = "";
         int flag;
 
